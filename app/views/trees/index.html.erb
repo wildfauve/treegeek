@@ -1,0 +1,25 @@
+<% title "Trees" %>
+
+<%= form_tag search_trees_path, :method => :get, :remote => true  do %>
+  <p>
+    <%= text_field_tag :q, params[:q]%>
+    <%= submit_tag "Search", :name => nil %>
+    <%= submit_tag "Clear", :name => "clear" %>
+  </p>
+<% end %>
+
+	<p>Tree Species
+	Date Planted
+  	Location
+  	Given Name
+  </p>
+  <div id="trees">  
+    <%= render @trees %>
+  </div>
+
+</table>
+
+
+<%= paginate @trees %>
+
+<p><%= link_to "New Tree", new_tree_path %></p>

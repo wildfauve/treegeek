@@ -1,0 +1,13 @@
+<h4>
+    <%= tree.kind.botanic_name %>
+</h4>
+<p>
+    <%= tree.date_planted %>
+    <%= tree.location_desc %>
+    <%= tree.given_name %>
+</p>
+<div class="actions">
+    <%= link_to "Show", tree %>
+    <%= link_to "Edit", edit_tree_path(tree) %>
+    <%= link_to "Destroy", tree, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'delete_tree' %>
+</div>

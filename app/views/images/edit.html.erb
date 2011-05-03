@@ -1,0 +1,21 @@
+<% title "Select Image for #{@kind.botanic_name}" %>
+<%= form_for :images, :url => kind_image_path, :html => {:method => :put}  do |f| %>
+	<table>
+		<% for pictureandmeta in @picturesandmeta -%>
+			<% picture = pictureandmeta.picture -%>
+			<tr>
+				<td><%= image_tag picture.image.url(:thumb)%><br>
+				<%= pictureandmeta.meta.name %>
+				</td>
+				<td><%= f.check_box(picture.id, :checked => @kind.image_checked?(pictureandmeta.meta.ext_picture_id)) %></td>
+				<td><%= pictureandmeta.meta.description %><td>
+			</td>
+		<% end %>
+	</table>
+	<%= f.submit "Submit" %>
+	<p>	
+		<%= link_to "Show", @kind %> |
+  		<%= link_to "View All", kinds_path %>
+	</p>
+
+<% end %>

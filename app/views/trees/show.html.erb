@@ -1,0 +1,66 @@
+<% title "Tree List" %>
+
+<%= render "shared/error_messages", :target => @tree %>
+
+<% picture = @tree.kind.get_icon.picture %>
+<p><%= link_to image_tag(picture.image.url(:thumb), :border => 0),
+ 							:action => 'edit', :controller => 'pictures', :id => picture %> </p>
+
+<p>
+  <strong>Location Description</strong>
+  <%= @tree.location_desc %>
+</p>
+<p>
+  <strong>Geo Location:</strong>
+  Lat: <%= @tree.coord_lat %> Long: <%= @tree.coord_long %>
+</p>
+<p>
+  <strong>Source</strong>
+  <%= @tree.source%>
+</p>
+<p>
+  <strong>Date Planted</strong>
+  <%= @tree.date_planted%>
+</p>
+
+<p>
+  <strong>Given Name</strong>
+  <%= @tree.given_name%>
+</p>
+
+<p>
+  <strong>Botanic Name</strong>
+  <%= @tree.kind.botanic_name %>
+</p>
+
+<%= render :partial => 'dimensions_show' %>
+
+<p><strong>Tree Pictures</strong>
+	<table>
+		<% pm = Pictureandmeta.find_by_assigned_ref_with_id(@tree)%>
+		<tr>
+			<% for pictureandmeta in pm -%>
+				<% picture = pictureandmeta.picture -%>
+				<td><%= link_to image_tag(picture.image.url(:thumb), :border => 0), 
+										:action => 'edit', :controller => 'pictures', :id => picture %></td>
+				<td>Tags:
+					<p><%= pictureandmeta.meta.tags %> </p>
+					<p><%= link_to "remove", assignedtrees_picture_path(picture, :tree => @tree.id.to_s), :method => :put %></p>
+				</td>
+			<% end %>
+		</tr>
+	</table>
+</p>
+
+<p>
+	<%= link_to "New Album", albums_path(:assigned_pics_tree => @tree.id.to_s) %>
+	<%= link_to "New Picture", new_picture_path(:assigned_pics_tree => @tree.id.to_s)%>
+	<%= link_to "Add Existing Picture", pictures_path(:assigned_pics_tree => @tree.id.to_s)%>
+
+</p>
+
+<p>
+  <%= link_to "Edit", edit_tree_path(@tree) %> |
+  <%= link_to "Destroy", @tree, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", trees_path %>
+</p>

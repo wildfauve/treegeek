@@ -1,0 +1,31 @@
+<% title "Kinds" %>
+
+<%= form_tag search_kinds_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :q, params[:q] %>
+    <%= submit_tag "Search", :name => "search" %>
+    <%= submit_tag "Clear", :name => "clear" %>
+  </p>
+<% end %>
+
+<table>
+  <tr>
+	<th>Tree Thumb</th>
+	<th>Botanic Name</th>
+  </tr>
+  <% for kind in @kinds %>
+    <tr>
+    <td><%= image_tag kind.get_icon.picture.image.url(:thumb) unless kind.icon.blank? %> </td>
+	  <td><%=h kind.botanic_name %></td>
+      <td><%= link_to "Show", kind %></td>
+      <td><%= link_to "Edit", edit_kind_path(kind) %></td>
+      <td><%= link_to "Destroy", kind, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p>Per Page <%= "#{@kinds.per_page}, #{@kinds.count}" %> </p>
+
+<%= paginate @kinds %>
+
+<p><%= link_to "New Kind", new_kind_path %></p>

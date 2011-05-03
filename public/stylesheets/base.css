@@ -1,0 +1,30 @@
+body {
+	background: #9BCD9B;
+}
+
+#container {
+	position: relative;
+	margin: auto;
+}
+
+#header {
+	background: #2F4F4F;
+	color: white;
+}
+
+#sidebar {
+	position: absolute;
+	left: 0;
+	top: 59px;
+	width: 10em;
+	background: #53868B;
+}
+
+#content {
+	margin: 0 10em;
+	background: #FFFFF2;
+}
+
+.actions {
+	font_size: 10px;
+}

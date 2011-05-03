@@ -1,0 +1,48 @@
+<% title "Edit Picture" %>
+
+<% picture = @pictureandmeta.picture -%>
+<% picmeta = @pictureandmeta.meta -%>
+
+<%= form_for :pictureandmeta, :url => picture_path, :html => { :method => :put, :multipart => true } do |form| %>
+
+	<%= form.fields_for picmeta do |f| -%>
+		<p>			
+			<%= f.label "Picture Name" %><br />
+			<%= f.text_field :name %>
+		</p>
+		
+		<p>
+			<%= f.label :description %><br />
+			<%= f.text_area :description, :cols => 40, :rows => 5 %>
+		</p>
+		<p>
+			<%= f.label :date_taken %><br />
+			<%= f.text_field :date_taken %>
+		</p>
+		<p>	
+			<%= f.label :photographer %><br />
+			<%= f.text_field :photographer %>
+		</p>
+		<p>	
+			<%= f.label :tags %><br />
+			<%= f.text_field(:tags, :value => picmeta.tags) %>
+		</p>
+
+
+	<% end %>
+	<p>
+		<%= image_tag picture.image.url(:medium) %>
+		
+		<% if !picture %>
+			<%= form.fields_for picture do |f| %>
+				<p>
+				  	<%= f.label :image%> <br/>
+					<%= f.file_field :image %>
+				</p>
+			<% end %>
+		<% end %>
+	</p>
+	
+  <%= form.submit "Submit" %>
+  
+<% end %>

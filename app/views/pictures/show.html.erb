@@ -1,0 +1,31 @@
+<% title "Picture", @pictureandmeta.meta.name %>
+
+<% picture = @pictureandmeta.picture -%>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @pictureandmeta.meta.name %>
+</p>
+<p>
+  <strong>Description</strong>
+  <%=h @pictureandmeta.meta.description.html_safe %>
+</p>
+<p>
+  <strong>Date</strong>
+  <%=h @pictureandmeta.meta.date_taken%>
+</p>
+<p>
+	<strong>Photographer</strong>
+	<%=h @pictureandmeta.meta.photographer%>
+</p>
+<p>
+	<%= image_tag picture.image.url(:medium) %> </br>
+		Tags:
+	<%= @pictureandmeta.meta.tags %>
+</p>
+<p>
+  <%= link_to "Edit", edit_picture_path(picture) %> |
+  <%= link_to "Destroy", picture, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", pictures_path %>
+</p>	
+	

@@ -1,0 +1,59 @@
+<%= form_for @tree do |f| %>
+  <p>
+    <%= f.label :location_desc %><br />
+    <%= f.text_field :location_desc %>
+  </p>
+  <p>
+    <%= f.label :coord_lat %><br />
+    <%= f.text_field :coord_lat %>
+  </p>
+  <p>
+    <%= f.label :coord_long %><br />
+    <%= f.text_field :coord_long %>
+  </p>
+<p>
+    <%= f.label :date_planted %><br />
+    <%= f.text_field :date_planted %>
+  </p>
+  <p>
+    <%= f.label :given_name %><br />
+    <%= f.text_field :given_name %>
+  </p>
+    <p>
+    <%= f.label :source %><br />
+    <%= f.text_field :source %>
+    </p>
+
+  <p>
+      <%= f.label :kind %>
+    <%= select_tag( :kind, options_for_select(Kind.all.map{|k| [k.botanic_name, k.id]})) %>
+  </p>
+
+	<%= render :partial => 'dimensions_show' %>
+
+  <%= fields_for :dimensions do |dims| %>
+    <p>Height (provide the value and the unit (m|cm|ft))</p>
+    <p>
+    <%= dims.label :hvalue %>
+    <%= dims.text_field :hvalue %>
+    <%= dims.label :hunit %>
+    <%= dims.text_field :hunit %>
+    </p>
+    <p>Width (provide the value and the unit (m|cm|ft))</p>
+    <p>
+    <%= dims.label :wvalue %>
+    <%= dims.text_field :wvalue %>
+    <%= dims.label :wunit %>
+    <%= dims.text_field :wunit %>
+    </p>
+    <p>Observation</p>
+    <p>
+    <%= dims.label :obs %>
+    <%= dims.text_field :obs %>
+    </p>
+
+  <% end %>
+
+  <p><%= f.submit "Submit" %></p>
+
+<% end %>

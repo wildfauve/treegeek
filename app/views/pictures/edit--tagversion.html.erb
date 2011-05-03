@@ -1,0 +1,39 @@
+<% title "Edit Picture" %>
+
+<% picture = @pictureandmeta.picture -%>
+<% meta = @pictureandmeta.meta -%>
+
+<% form_tag :action => :update, :id => picture, :html => { :method => :put, :multipart => true } do %>
+
+		<p>
+			<label for="name">Picture Name:</label>
+			<%= text_field_tag :name, meta.name %>
+		</p>
+		
+		<p>
+			<label for="description">Description:</label>
+			<%= text_area_tag :description, meta.description, :cols => 40, :rows => 5 %>
+		</p>
+		<p>
+			<label for="date_taken">Date Taken:</label>
+			<%= text_field_tag :date_taken, meta.date_taken %>
+		</p>
+		<p>	
+			<label for="photographer">Photographer:</label>
+			<%= text_field_tag :photographer, meta.photographer %>
+		</p>
+	<p>
+		<%= image_tag picture.image.url(:medium) %>
+		
+		<% fields_for picture do |f| %>
+		  	<%= f.label :image%> <br/>
+			<%= f.file_field :image%>
+		<% end %>
+		
+	</p>
+	
+
+
+  <%= submit_tag "Submit" %>
+  
+<% end %>

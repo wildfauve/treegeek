@@ -1,0 +1,60 @@
+<% title "Pictures" %>
+
+<%= form_tag search_pictures_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :q, params[:q] %>
+    <%= submit_tag "Search", :name => "search" %>
+    <%= submit_tag "Clear", :name => "clear" %>
+  </p>
+<% end %>
+
+<table>
+	<tr>
+		<th>
+			Picture Name
+		</th>
+		<th>
+			Picture
+		</th>
+		<% if @tree_id %>
+			<th>Select Picture for Tree</th>
+		<% end %>
+	</tr>		
+	<% if @tree_id %>
+		<%= form_tag selected_trees_pictures_path do  %>
+			<% for pictureandmeta in @picturesandmeta -%>
+				<% picture = pictureandmeta.picture %>
+				<tr>
+					<td><%=h pictureandmeta.meta.name %></td>
+					<td><%= link_to image_tag(picture.image.url(:thumb), :alt => "show #{pictureandmeta.meta.name}", :border => 0), 
+															:action => 'show', :id => picture %>
+					<% if pictureandmeta.meta.assignedrefs.where(:ref => @tree_id).exists? %>
+						<td>Already Selected</td>
+					<% else %>
+						<td><%= check_box_tag "add_to[]", picture.id %></td>
+					<% end %>
+				</tr>
+			<% end %>
+			</table>
+			<%= hidden_field_tag "selected_tree", @tree_id %>
+			<%= submit_tag "Assign", :name => nil %>
+		<% end %>
+	<% else %>
+		<% for pictureandmeta in @picturesandmeta -%>
+			<% picture = pictureandmeta.picture -%>
+			<tr>
+				<td><%=h pictureandmeta.meta.name %></td>
+				<td><%= link_to image_tag(picture.image.url(:thumb), :alt => "show #{pictureandmeta.meta.name}", :border => 0), 
+																:action => 'show', :id => picture %>
+				<td><%= link_to "Show", picture, :class => "stdbutton2" %></td>				
+				<td><div class="stdbutton2"><%= link_to "edit", edit_picture_path(picture) %><div></td>
+				<td><%= link_to "delete", picture, :confirm => 'Are you sure?', :method => :delete, :class => "stdbutton2" %></td>
+			</tr>
+		<% end %>
+		
+	<% end %>
+</table>
+
+
+<p><%= link_to "New Picture", new_picture_path, :class => "stdbutton" %>
+</p>

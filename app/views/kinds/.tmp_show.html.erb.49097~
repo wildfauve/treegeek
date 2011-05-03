@@ -1,0 +1,25 @@
+<% title "Kind" %>
+
+<p>
+  <strong>Botanic Name:</strong>
+  <%=h @kind.botanic_name %>
+</p>
+<p>
+  <strong>Maori Name:</strong>
+  <%=h @kind.maori_name %>
+</p>
+<p>
+  <strong>English Name:</strong>
+  <%=h @kind.english_name%>
+</p>
+<p>
+	<%=h @kind.description%>
+</p>
+<p>
+	<%= image_tag imageref(@kind.botanic_name)%>
+</p>
+<p>
+  <%= link_to "Edit", edit_kind_path(@kind) %> |
+  <%= link_to "Destroy", @kind, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", kinds_path %>
+</p>
