@@ -8,18 +8,20 @@
   </p>
 <% end %>
 
-	<p>Tree Species
+<div id="tree_results">
+
+	<div class="header">
+	Tree Species
 	Date Planted
   	Location
   	Given Name
-  </p>
-  <div id="trees">  
+  </div>  
     <%= render @trees %>
-  </div>
 
-</table>
 
 
 <%= paginate @trees %>
+
+</div>
 
 <p><%= link_to "New Tree", new_tree_path %></p>
