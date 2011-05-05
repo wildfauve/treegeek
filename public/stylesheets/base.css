@@ -20,11 +20,8 @@ body {
 	background: #53868B;
 }
 
-#content {
-	margin: 0 10em;
-	background: #FFFFF2;
-}
+#content {margin: 0 10em; background: #FFFFF2;}
 
-.actions {
-	font_size: 10px;
-}
+#tree_results .result .title {font-size: 110%;}
+#tree_results .result .actions {font_size: 10px;}
+#tree_results .result .details {font-size: 80%; color: #555}
