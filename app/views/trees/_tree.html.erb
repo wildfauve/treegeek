@@ -3,7 +3,7 @@
     <%= tree.kind.botanic_name %>
 </div>
 <div class="details">
-    <%= tree.date_planted %>
+    <%= tree.date_planted.to_s(:tree_date) %>
     <%= tree.location_desc %>
     <%= tree.given_name %>
 </div>
