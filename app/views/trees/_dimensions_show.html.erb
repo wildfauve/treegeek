@@ -9,8 +9,8 @@
   <% for dim in @tree.dimensions %>
     <tr>
       <td><%= dim.created_at %> </td>
-      <td><%= "#{dim.height["value"]} #{dim.height["unit"]}" %></td>
-      <td><%= "#{dim.width["value"]} #{dim.width["unit"]}" %></td>
+      <td><%= "#{dim.height["value"]}#{dim.height["unit"]}" %></td>
+      <td><%= "#{dim.width["value"]}#{dim.width["unit"]}" %></td>
       <td><%= dim.observation %> </td>
     </tr>
   <% end %>

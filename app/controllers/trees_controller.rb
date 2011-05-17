@@ -39,7 +39,7 @@ class TreesController < ApplicationController
     @tree = Tree.find(params[:id])
     #
     #Rails.logger.info(">>>Update Tree: #{params.inspect} >> #{params[:dimensions]} >>> #{dim.inspect}")
-    @tree.add_external_refs(params[:kind], params[:dimensions])
+    @tree.add_external_refs(params)
     respond_to do |format|
       if @tree.update_attributes(params[:tree])
         flash[:notice] = "Successfully updated tree."

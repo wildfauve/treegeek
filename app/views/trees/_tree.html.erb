@@ -1,5 +1,9 @@
 <div class="result">
 <div class="title">
+	<% pm = Pictureandmeta.find_by_assigned_ref_with_id(@tree)%>
+	<% picture = pictureandmeta.picture -%>
+				<td><%= link_to image_tag(picture.image.url(:thumb), :border => 0), 
+										:action => 'edit', :controller => 'pictures', :id => picture %>
     <%= tree.kind.botanic_name %>
 </div>
 <div class="details">

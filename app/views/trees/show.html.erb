@@ -20,7 +20,7 @@
 </p>
 <p>
   <strong>Date Planted</strong>
-  <%= @tree.date_planted%>
+  <%= @tree.date_planted.to_s(:tree_date)%>
 </p>
 
 <p>
@@ -53,9 +53,11 @@
 </p>
 
 <p>
-	<%= link_to "New Album", albums_path(:assigned_pics_tree => @tree.id.to_s) %>
-	<%= link_to "New Picture", new_picture_path(:assigned_pics_tree => @tree.id.to_s)%>
-	<%= link_to "Add Existing Picture", pictures_path(:assigned_pics_tree => @tree.id.to_s)%>
+	<div class="actions"
+		<%= link_to "New Album", albums_path(:assigned_pics_tree => @tree.id.to_s) %>
+		<%= link_to "New Picture", new_picture_path(:assigned_pics_tree => @tree.id.to_s)%>
+		<%= link_to "Add Existing Picture", pictures_path(:assigned_pics_tree => @tree.id.to_s)%>
+	</div>
 
 </p>
 

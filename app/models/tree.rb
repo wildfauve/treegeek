@@ -34,15 +34,17 @@ class Tree
 
 	# helper to add the kind reference and the dimensions embedding (called from controller)
 	# a nil kind means that it wont be updated.
-  def add_external_refs(kind_ref, dim)
+  def add_external_refs(params)
     #raise if kind_ref.nil?
-    if kind_ref != nil
-      kind = Kind.find(kind_ref)
+    if params[:kind] != nil
+      kind = Kind.find(params[:kind])
       kind.tree = self
       kind.save
     end
-    self.dimensions.create(:height => {:value => dim[:hvalue], :unit => dim[:hunit]},
-    :width => {:value => dim[:wvalue], :unit => dim[:wunit]},
+    unit = params[:unit]
+    dim = params[:dimensions]
+    self.dimensions.create(:height => {:value => dim[:hvalue], :unit => unit},
+    :width => {:value => dim[:wvalue], :unit => unit},
     :observation => dim[:obs]) unless dim[:hvalue].empty? && dim[:wvalue].empty?
   end
 

@@ -12,6 +12,7 @@ class Picmeta
   field :date_taken, :type => Time
   field :photographer, :type => String
   field :tags, :type => Array, :default => []
+  field :random, :type => Float
 
   paginates_per 20
 

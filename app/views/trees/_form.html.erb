@@ -33,25 +33,21 @@
 	<%= render :partial => 'dimensions_show' %>
 
   <%= fields_for :dimensions do |dims| %>
-    <p>Height (provide the value and the unit (m|cm|ft))</p>
+    <div class="dimensions">
     <p>
-    <%= dims.label :hvalue %>
+    <%= dims.label :unit %>
+    <%= select_tag :unit, options_for_select(["m", "ft", "cm"]) %>
+    Height:
     <%= dims.text_field :hvalue %>
-    <%= dims.label :hunit %>
-    <%= dims.text_field :hunit %>
-    </p>
-    <p>Width (provide the value and the unit (m|cm|ft))</p>
-    <p>
-    <%= dims.label :wvalue %>
+    Width:
     <%= dims.text_field :wvalue %>
-    <%= dims.label :wunit %>
-    <%= dims.text_field :wunit %>
     </p>
     <p>Observation</p>
     <p>
     <%= dims.label :obs %>
     <%= dims.text_field :obs %>
     </p>
+    </div>
 
   <% end %>
 
