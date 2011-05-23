@@ -35,22 +35,25 @@
 
 <%= render :partial => 'dimensions_show' %>
 
-<p><strong>Tree Pictures</strong>
-	<table>
-		<% pm = Pictureandmeta.find_by_assigned_ref_with_id(@tree)%>
-		<tr>
-			<% for pictureandmeta in pm -%>
-				<% picture = pictureandmeta.picture -%>
-				<td><%= link_to image_tag(picture.image.url(:thumb), :border => 0), 
-										:action => 'edit', :controller => 'pictures', :id => picture %></td>
-				<td>Tags:
-					<p><%= pictureandmeta.meta.tags %> </p>
-					<p><%= link_to "remove", assignedtrees_picture_path(picture, :tree => @tree.id.to_s), :method => :put %></p>
-				</td>
-			<% end %>
-		</tr>
-	</table>
-</p>
+<% pm = Pictureandmeta.find_by_assigned_ref_with_id(@tree) %>
+
+<% if pm %>
+	<p><strong>Tree Pictures</strong>
+		<table>
+			<tr>
+				<% for pictureandmeta in pm -%>
+					<% picture = pictureandmeta.picture -%>
+					<td><%= link_to image_tag(picture.image.url(:thumb), :border => 0), 
+											:action => 'edit', :controller => 'pictures', :id => picture %></td>
+					<td>Tags:
+						<p><%= pictureandmeta.meta.tags %> </p>
+						<p><%= link_to "remove", assignedtrees_picture_path(picture, :tree => @tree.id.to_s), :method => :put %></p>
+					</td>
+				<% end %>
+			</tr>
+		</table>
+	</p>
+<%end%>
 
 <p>
 	<div class="actions"

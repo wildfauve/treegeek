@@ -22,6 +22,6 @@ body {
 
 #content {margin: 0 10em; background: #FFFFF2;}
 
-#tree_results .result .title {font-size: 110%;}
+#tree_results .tree .title {font-size: 110%;}
 .actions {font-size: 80%;}
-#tree_results .result .details {font-size: 80%; color: #555}
+#tree_results .tree .details {font-size: 80%; color: #555}

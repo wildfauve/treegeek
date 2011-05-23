@@ -1,5 +1,7 @@
 class Pictureandmeta
 
+  FINDOPTS = {:with_pictures => true}
+
   class PicmetaError < StandardError; end
 
   # This is a proxy for our 2 models that deal with Pictures (the ActiveRecord paperclip model) and 
@@ -32,27 +34,36 @@ class Pictureandmeta
 
   # provide a collection of ids (in an array) from another model (e.g. a tree), and find the images with this as a tag
   # params: Array of tree_ids.to_s
-  def self.find_by_assigned_ref_with_id(modelref, options={:with_pictures => true})
+  def self.find_by_assigned_ref_with_id(modelref, options={})
     # TODO: this only finds a tree at the moment
     # TODO: Probaby broken when there are more than 1 trees in the assigned tree
     # TODO: Bit of metaprog here; as can use the model's class name as the type
-    metas = Picmeta.where('assignedrefs.ref' => modelref.id.to_s).and('assignedrefs.ref_type' => modelref.class.name.downcase)
+    options = FINDOPTS.merge(options)
+    metas = Picmeta.where('assignedrefs.ref' => modelref.id.to_s)
+                            .and('assignedrefs.ref_type' => modelref.class.name.downcase)
+    metas = metas.and(:random.lt => rand) if options[:result]  # at the moment this is always :onerandom
+    Rails.logger.info(">>>Find_by_RESULT: #{metas.inspect}")
+    return nil if metas.count == 0
     if options[:with_pictures]
-      Rails.logger.info(">>>Find_by: #{metas.inspect}, #{metas.count}")
+      Rails.logger.info(">>>Find_by_AFTER SEARCH: METAs #{metas.inspect}, #{metas.count}")
       pictures = []
       metas.each do |m|
         pic = Picture.find_by_id(m.ext_picture_id)
         pictures << pic if pic
         #Rails.logger.info(">>>Find_by_Process Metas: #{pic.inspect}, #{pictures.inspect}")
       end
-      #Rails.logger.info(">>>Find_by: #{pictures.inspect}, #{metas.inspect}, #{metas.count}")
-      normaliseall(pictures, metas)
+      
+      pmarray = normaliseall(pictures, metas)
+      Rails.logger.info(">>>Find_by  AFTER NORM: #{pmarray.inspect}")
+      Rails.logger.info(">>>Find_by_RETURN FROM WITH PICTURES")
+      return pmarray[0] if options[:result]
+      pmarray
     else
       metaarray = []
       metas.each do |m|
        metaarray << Pictureandmeta.new(meta: m)
       end
-      metaarray 
+      return metaarray 
     end
   end
   
@@ -64,6 +75,7 @@ class Pictureandmeta
       picmeta = Picmeta.new(params[:pictureandmeta][:picmeta])
       picmeta.ext_picture_id = picture.id.to_s
       picmeta.tags = tag_ify(params[:pictureandmeta][:picmeta][:tags])
+      picmeta.random = rand     # add a random number of efficient random search
       picmeta.save ? true : false
     else
       false
@@ -116,6 +128,16 @@ class Pictureandmeta
   def initialize(options={})
     options[:pic] != nil ? @picture = options[:pic] : @picture = Picture.new
     options[:meta] != nil ? @meta = options[:meta] : @meta = Picmeta.new
+    #
+    # This is away of extending the Mongo doc model; I need a random number assigned to a picmeta.
+    #
+    if options[:meta]
+      if @meta.random.nil?
+        @meta.random = rand
+        @meta.save
+      end
+    end
+
   end
   
   

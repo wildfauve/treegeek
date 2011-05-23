@@ -1,5 +1,7 @@
 class TreesController < ApplicationController
 
+  before_filter :check_authorisation, :with => :user_not_authorised
+  before_filter :set_tree, :only => [:show, :edit, :update, :delete]
 
   def index
     @trees = Tree.all.page params[:page]
@@ -26,17 +28,17 @@ class TreesController < ApplicationController
 
   # GET /trees/{id}
   def show
-    @tree = Tree.find(params[:id])
+    #@tree = Tree.find(params[:id])
   end
 
   # GET /trees/edit
   def edit
-    @tree = Tree.find(params[:id])
+    #@tree = Tree.find(params[:id])
   end
 
   # PUT /trees/{id}
   def update
-    @tree = Tree.find(params[:id])
+    #@tree = Tree.find(params[:id])
     #
     #Rails.logger.info(">>>Update Tree: #{params.inspect} >> #{params[:dimensions]} >>> #{dim.inspect}")
     @tree.add_external_refs(params)
@@ -54,7 +56,7 @@ class TreesController < ApplicationController
      #
      # DELETE Tree
      #
-     @tree = Tree.find(params[:id])
+     #@tree = Tree.find(params[:id])
      # remove references in other models
     @tree.remove_references(:scope => :all)
     respond_to do |format|
@@ -84,5 +86,20 @@ class TreesController < ApplicationController
   end
 
 
+  private
+
+  def set_tree
+    @tree = Tree.find(params[:id])
+  end
+
+  def check_authorisation
+    # exception handling based on user authorisation
+    # raise User::NotAuthorized unless current_user.admin?
+  end
+
+  def user_not_authorisated
+    #flash[:error] = "You don't have access to this section." 
+    #redirect_to :back
+  end
 
 end

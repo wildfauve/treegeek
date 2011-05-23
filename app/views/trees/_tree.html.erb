@@ -1,19 +1,23 @@
-<div class="result">
+<div class="tree">
 <div class="title">
-	<% pm = Pictureandmeta.find_by_assigned_ref_with_id(@tree)%>
-	<% picture = pictureandmeta.picture -%>
-				<td><%= link_to image_tag(picture.image.url(:thumb), :border => 0), 
-										:action => 'edit', :controller => 'pictures', :id => picture %>
+	<% pm = Pictureandmeta.find_by_assigned_ref_with_id(tree, :result => :onerandom)%>
+    <% if pm %>
+	   <%= link_to image_tag(pm.picture.image.url(:thumb), :border => 0), 
+										:action => 'edit', :controller => 'pictures', :id => pm.picture %>
+    <% else %>
+        No Image
+    <% end %>
+    <%= tree.given_name %> |
     <%= tree.kind.botanic_name %>
 </div>
 <div class="details">
     <%= tree.date_planted.to_s(:tree_date) %>
     <%= tree.location_desc %>
-    <%= tree.given_name %>
 </div>
 <div class="actions">
     <%= link_to "Show", tree %>
     <%= link_to "Edit", edit_tree_path(tree) %>
     <%= link_to "Destroy", tree, :confirm => 'Are you sure?', :method => :delete, :remote => true, :class => 'delete_tree' %>
 </div>
+<br/>
 </div>
